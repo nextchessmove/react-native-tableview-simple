@@ -168,8 +168,8 @@ class Section extends Component {
 const styles = StyleSheet.create({
   section: {},
   section_inner: {
-    borderTopWidth: StyleSheet.hairlineWidth,
-    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderTopWidth: 1,
+    borderBottomWidth: 1,
     borderColor: '#C8C7CC',
   },
   sectionheader: {

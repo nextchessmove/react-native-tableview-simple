@@ -44,7 +44,7 @@ Separator.defaultProps = {
 const styles = StyleSheet.create({
   separator: {},
   separator_inner: {
-    height: StyleSheet.hairlineWidth,
+    height: 1,
   },
 });
 
