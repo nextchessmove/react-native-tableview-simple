@@ -7,7 +7,6 @@
 import React, { Component } from 'react';
 import {
   ActivityIndicator,
-  AppRegistry,
   Dimensions,
   Image,
   ScrollView,
@@ -17,20 +16,16 @@ import {
   TextInput,
   View,
 } from 'react-native';
-
 import { Cell, Section, TableView } from 'react-native-tableview-simple';
 
-import ExampleWithFlatList from './exampleWithFlatList';
-
 // Example component for section:headerComponent
-const CustomSectionHeader = () =>
+const CustomSectionHeader = () => (
   <View>
     <Text>Custom header!</Text>
-  </View>;
+  </View>
+);
 
-// eslint-disable-next-line react/prefer-stateless-function
-class Example extends Component {
-  // eslint-disable-next-line class-methods-use-this
+export default class App extends Component<{}> {
   render() {
     /*
      * Uncomment following line to render example with flatlist
@@ -210,6 +205,14 @@ class Example extends Component {
             />
             <Cell
               cellStyle="Basic"
+              title="Colored DisclosureIndicator"
+              accessory="DetailDisclosure"
+              accessoryColor="green"
+              accessoryColorDisclosureIndicator="green"
+              onPress={() => console.log('Heyho!')}
+            />
+            <Cell
+              cellStyle="Basic"
               title="Switch"
               cellAccessoryView={<Switch />}
               contentContainerStyle={{ paddingVertical: 4 }}
@@ -292,5 +295,3 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
   },
 });
-
-AppRegistry.registerComponent('example', () => Example);

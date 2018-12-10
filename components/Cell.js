@@ -15,6 +15,7 @@ const Cell = props => {
   const {
     accessory,
     accessoryColor,
+    accessoryColorDisclosureIndicator,
     allowFontScaling,
     backgroundColor,
     cellStyle,
@@ -34,6 +35,8 @@ const Cell = props => {
     onUnHighlightRow,
     leftDetailColor,
     rightDetailColor,
+    subtitleColor,
+    subtitleTextStyle,
     title,
     titleTextStyle,
     titleTextStyleDisabled,
@@ -43,8 +46,8 @@ const Cell = props => {
   const isPressable = !!onPress;
 
   /**
-    * Merge styles with props
-    */
+   * Merge styles with props
+   */
   // eslint-disable-next-line no-underscore-dangle
   const _styles = {
     ...styles,
@@ -60,7 +63,9 @@ const Cell = props => {
       : [styles.cell_title, { color: titleTextColor }, titleTextStyle],
     cell_leftDetail: [
       styles.cell_leftDetail,
-      { color: leftDetailColor },
+      {
+        color: leftDetailColor,
+      },
       detailTextStyle,
     ],
     cell_leftDetailTitle: isDisabled
@@ -68,10 +73,18 @@ const Cell = props => {
       : [styles.cell_leftDetailTitle, { color: titleTextColor }],
     cell_rightDetail: [
       styles.cell_rightDetail,
-      { color: rightDetailColor },
+      {
+        color: rightDetailColor,
+      },
       detailTextStyle,
     ],
-
+    cell_subtitle: [
+      styles.cell_subtitle,
+      {
+        color: subtitleColor,
+      },
+      subtitleTextStyle,
+    ],
     accessory_checkmark: [
       styles.accessory_checkmark,
       { borderColor: accessoryColor },
@@ -84,13 +97,17 @@ const Cell = props => {
       styles.accessory_detailText,
       { color: accessoryColor },
     ],
+    accessory_disclosureIndicator: [
+      styles.accessory_disclosureIndicator,
+      { borderColor: accessoryColorDisclosureIndicator },
+    ],
   };
 
   /**
-    * Render accessoryView
-    * Currently available
-    * @return {View} View with accessory
-    */
+   * Render accessoryView
+   * Currently available
+   * @return {View} View with accessory
+   */
   const renderAccessoryView = () => {
     switch (accessory) {
       case 'DisclosureIndicator':
@@ -148,10 +165,10 @@ const Cell = props => {
   };
 
   /**
-    * Render cell of type Basic
-    * @return {View} View with Text and Accessory
-    */
-  const renderCellBasic = () =>
+   * Render cell of type Basic
+   * @return {View} View with Text and Accessory
+   */
+  const renderCellBasic = () => (
     <View style={_styles.cellContentView}>
       <Text
         allowFontScaling={allowFontScaling}
@@ -160,13 +177,14 @@ const Cell = props => {
       >
         {title}
       </Text>
-    </View>;
+    </View>
+  );
 
   /**
    * Render cell of type RightDetail
    * @return {View} View with Text, Text and Accessory
    */
-  const renderCellRightDetail = () =>
+  const renderCellRightDetail = () => (
     <View style={_styles.cellContentView}>
       <Text
         allowFontScaling={allowFontScaling}
@@ -186,13 +204,14 @@ const Cell = props => {
       >
         {detail}
       </Text>
-    </View>;
+    </View>
+  );
 
   /**
    * Render cell of type LeftDetail
    * @return {View} View with Text, Text and Accessory
    */
-  const renderCellLeftDetail = () =>
+  const renderCellLeftDetail = () => (
     <View style={_styles.cellContentView}>
       <Text
         allowFontScaling={allowFontScaling}
@@ -212,13 +231,14 @@ const Cell = props => {
       >
         {title}
       </Text>
-    </View>;
+    </View>
+  );
 
   /**
-    * Render cell of type Subtitle
-    * @return {View} View with View, Text, Text and Accessory
-    */
-  const renderCellSubtitle = () =>
+   * Render cell of type Subtitle
+   * @return {View} View with View, Text, Text and Accessory
+   */
+  const renderCellSubtitle = () => (
     <View
       style={[_styles.cellContentView, _styles.cellContentView__type_subtitle]}
     >
@@ -242,12 +262,13 @@ const Cell = props => {
           {detail}
         </Text>
       </View>
-    </View>;
+    </View>
+  );
 
   /**
-    * Renders correct contentView
-    * @return {View} ContentView
-    */
+   * Renders correct contentView
+   * @return {View} ContentView
+   */
   const renderCellContentView = () => {
     switch (cellStyle) {
       case 'Basic':
@@ -267,12 +288,13 @@ const Cell = props => {
    * Render content of cell
    * @return {View} Complete View with cell elements
    */
-  const renderCell = () =>
+  const renderCell = () => (
     <View style={_styles.cell}>
       {cellImageView || renderImageView()}
       {cellContentView || renderCellContentView()}
       {cellAccessoryView || renderAccessoryView()}
-    </View>;
+    </View>
+  );
 
   if (isPressable && !isDisabled) {
     return (
@@ -287,11 +309,7 @@ const Cell = props => {
       </TouchableHighlight>
     );
   }
-  return (
-    <View>
-      {renderCell()}
-    </View>
-  );
+  return <View>{renderCell()}</View>;
 };
 
 const styles = StyleSheet.create({
@@ -319,6 +337,7 @@ const styles = StyleSheet.create({
   },
   cell_title: {
     fontSize: 16,
+    letterSpacing: -0.32,
     flex: 1,
   },
   cell_leftDetailTitle: {
@@ -334,11 +353,13 @@ const styles = StyleSheet.create({
   },
   cell_rightDetail: {
     fontSize: 16,
+    letterSpacing: -0.32,
     alignSelf: 'center',
     color: '#8E8E93',
   },
   cell_subtitle: {
     fontSize: 11,
+    letterSpacing: 0.066,
   },
   cell_text__disabled: {
     color: 'gray',
@@ -382,6 +403,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: '400',
     fontFamily: 'Georgia',
+    letterSpacing: -0.24,
   },
   accessory_detailDisclosure: {
     flexDirection: 'row',
@@ -406,6 +428,7 @@ const styles = StyleSheet.create({
 Cell.propTypes = {
   accessory: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   accessoryColor: PropTypes.string.isRequired,
+  accessoryColorDisclosureIndicator: PropTypes.string.isRequired,
   allowFontScaling: PropTypes.bool,
   cellStyle: PropTypes.string,
   cellContentView: PropTypes.element,
@@ -416,6 +439,7 @@ Cell.propTypes = {
   detail: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   detailTextStyle: Text.propTypes.style,
   disableImageResize: PropTypes.bool,
+  hideSeparator: PropTypes.bool,
   highlightActiveOpacity: PropTypes.number,
   highlightUnderlayColor: PropTypes.string,
   image: PropTypes.element,
@@ -424,6 +448,8 @@ Cell.propTypes = {
   onHighlightRow: PropTypes.func,
   onUnHighlightRow: PropTypes.func,
   rightDetailColor: PropTypes.string,
+  subtitleColor: PropTypes.string,
+  subtitleTextStyle: Text.propTypes.style,
   title: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.number,
@@ -438,6 +464,7 @@ Cell.propTypes = {
 Cell.defaultProps = {
   accessory: false,
   accessoryColor: '#007AFF',
+  accessoryColorDisclosureIndicator: '#C7C7CC',
   allowFontScaling: true,
   cellStyle: 'Basic',
   cellContentView: null,
@@ -448,6 +475,7 @@ Cell.defaultProps = {
   detail: '',
   detailTextStyle: {},
   disableImageResize: false,
+  hideSeparator: false,
   highlightActiveOpacity: 0.8,
   highlightUnderlayColor: 'black',
   image: null,
@@ -457,6 +485,8 @@ Cell.defaultProps = {
   onUnHighlightRow: null,
   onPress: false,
   rightDetailColor: '#8E8E93',
+  subtitleColor: '#000',
+  subtitleTextStyle: {},
   title: '',
   titleTextColor: '#000',
   titleTextStyle: {},

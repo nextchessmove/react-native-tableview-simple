@@ -31,10 +31,7 @@ exports[`renders with accessory 1`] = `
       }
     >
       <Text
-        accessible={true}
         allowFontScaling={true}
-        disabled={false}
-        ellipsizeMode="tail"
         numberOfLines={1}
         style={
           Array [
@@ -55,10 +52,7 @@ exports[`renders with accessory 1`] = `
         Detail
       </Text>
       <Text
-        accessible={true}
         allowFontScaling={true}
-        disabled={false}
-        ellipsizeMode="tail"
         numberOfLines={1}
         style={
           Array [
@@ -84,20 +78,25 @@ exports[`renders with accessory 1`] = `
     >
       <View
         style={
-          Object {
-            "backgroundColor": "transparent",
-            "borderColor": "#c7c7cc",
-            "borderRightWidth": 1,
-            "borderTopWidth": 1,
-            "height": 10,
-            "marginLeft": 7,
-            "transform": Array [
-              Object {
-                "rotate": "45deg",
-              },
-            ],
-            "width": 10,
-          }
+          Array [
+            Object {
+              "backgroundColor": "transparent",
+              "borderColor": "#c7c7cc",
+              "borderRightWidth": 1,
+              "borderTopWidth": 1,
+              "height": 10,
+              "marginLeft": 7,
+              "transform": Array [
+                Object {
+                  "rotate": "45deg",
+                },
+              ],
+              "width": 10,
+            },
+            Object {
+              "borderColor": "#C7C7CC",
+            },
+          ]
         }
       />
     </View>
@@ -136,10 +135,7 @@ exports[`renders with left detail 1`] = `
       }
     >
       <Text
-        accessible={true}
         allowFontScaling={true}
-        disabled={false}
-        ellipsizeMode="tail"
         numberOfLines={1}
         style={
           Array [
@@ -160,10 +156,7 @@ exports[`renders with left detail 1`] = `
         Detail
       </Text>
       <Text
-        accessible={true}
         allowFontScaling={true}
-        disabled={false}
-        ellipsizeMode="tail"
         numberOfLines={1}
         style={
           Array [

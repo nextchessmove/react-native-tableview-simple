@@ -1,5 +1,5 @@
 /* eslint-disable import/no-unresolved */
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 
 import PropTypes from 'prop-types';
 
@@ -7,7 +7,7 @@ import { StyleSheet, Text, View } from 'react-native';
 
 import Separator from './Separator';
 
-class Section extends Component {
+class Section extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
@@ -64,6 +64,10 @@ class Section extends Component {
       ],
     };
 
+    // Need until .count is fixed: https://github.com/facebook/react/issues/7685
+    const childrenWithoutEmpty = React.Children.toArray(children);
+    const sumOfChildren = childrenWithoutEmpty.length;
+
     /**
      * Render Cell and add Border
      * @param  {Cell} child [description]
@@ -83,8 +87,9 @@ class Section extends Component {
       if (
         hideSeparator ||
         !Array.isArray(children) ||
-        React.Children.count(children) === 1 ||
-        index === React.Children.count(children) - 1
+        sumOfChildren === 1 ||
+        index === sumOfChildren - 1 ||
+        child.props.hideSeparator
       ) {
         return React.cloneElement(child, propsToAdd);
       }
@@ -100,7 +105,7 @@ class Section extends Component {
       }
 
       return (
-        <View>
+        <View key={child.key}>
           {React.cloneElement(child, propsToAdd)}
           <Separator
             isHidden={invisibleSeparator}
@@ -156,9 +161,9 @@ class Section extends Component {
     return (
       <View style={_styles.section}>
         {headerComponent || renderHeader()}
-        <View style={styles.section_inner}>
-          {React.Children.map(children, renderChild)}
-        </View>
+        <Separator insetLeft={0} tintColor={separatorTintColor} />
+        {childrenWithoutEmpty.map(renderChild)}
+        <Separator insetLeft={0} tintColor={separatorTintColor} />
         {footerComponent || renderFooter()}
       </View>
     );
@@ -167,11 +172,6 @@ class Section extends Component {
 
 const styles = StyleSheet.create({
   section: {},
-  section_inner: {
-    borderTopWidth: 1,
-    borderBottomWidth: 1,
-    borderColor: '#C8C7CC',
-  },
   sectionheader: {
     paddingLeft: 15,
     paddingRight: 15,
@@ -179,6 +179,7 @@ const styles = StyleSheet.create({
   },
   sectionheader__text: {
     fontSize: 13,
+    letterSpacing: -0.078,
   },
   sectionfooter: {
     paddingLeft: 15,
@@ -187,6 +188,7 @@ const styles = StyleSheet.create({
   },
   sectionfooter__text: {
     fontSize: 13,
+    letterSpacing: -0.078,
   },
 });
 
