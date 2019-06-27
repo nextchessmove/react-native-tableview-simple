@@ -29,7 +29,6 @@ Have a look at the [examples below](https://github.com/Purii/react-native-tablev
 
 1.  _Install as dependency:_
 
-
 ```sh
 // yarn
 yarn add react-native-tableview-simple
@@ -38,7 +37,6 @@ npm i react-native-tableview-simple --S
 ```
 
 2.  _Add needed components:_
-
 
 ```javascript
 import { Cell, Section, TableView } from "react-native-tableview-simple";
@@ -89,6 +87,7 @@ It's possible to use the `Flatlist` component instead ([Example](#render-with-fl
 | separatorInsetLeft   |   `15`    |     `number`      | Left inset of separator                                    |
 | separatorInsetRight  |    `0`    |     `number`      | Right inset of separator                                   |
 | separatorTintColor   | `#C8C7CC` |     `string`      | Color of separator                                         |
+| withSafeAreaView     |  `true`   |      `bool`       | Render section header and footer with SafeAreaView         |
 
 ### `Cell`
 
@@ -127,6 +126,7 @@ To get an idea what you can modify via `props`, have a look at the [examples bel
 | titleTextStyle                    |   `{}`    |          `Text.propTypes.style`           | These styles will be applied to the title `Text`-Component (_e.g.: update `fontSize` or `fontFamily`_)                                                                              |
 | titleTextStyleDisabled            |   `{}`    |          `Text.propTypes.style`           | These styles will be applied to the title `Text`-Component, when the cell is disabled                                                                                               |
 | onPress                           |     -     |             `func` or `false`             | If set, cell will be automaticaly initialized with TouchableHighlight                                                                                                               |
+| withSafeAreaView                  |  `true`   |                  `bool`                   | Render cell with SafeAreaView                                                                                                                                                       |
 
 #### Wrap `Cell`
 

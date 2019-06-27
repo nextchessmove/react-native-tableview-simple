@@ -4,6 +4,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import {
+  SafeAreaView,
   StyleSheet,
   Text,
   TouchableHighlight,
@@ -41,6 +42,7 @@ const Cell = props => {
     titleTextStyle,
     titleTextStyleDisabled,
     titleTextColor,
+    withSafeAreaView,
   } = props;
 
   const isPressable = !!onPress;
@@ -57,6 +59,12 @@ const Cell = props => {
         backgroundColor,
       },
       contentContainerStyle,
+    ],
+    cellSafeAreaContainer: [
+      styles.cellSafeAreaContainer,
+      {
+        backgroundColor,
+      },
     ],
     cell_title: isDisabled
       ? [styles.cell_title, styles.cell_text__disabled, titleTextStyleDisabled]
@@ -296,6 +304,21 @@ const Cell = props => {
     </View>
   );
 
+  /**
+   * Render content of cell with SafeAreaView
+   * Inside view to prevent overwriting styles
+   * @return {View} Complete View with cell elements
+   */
+  const renderCellWithSafeAreaView = () => (
+    <SafeAreaView style={_styles.cellSafeAreaContainer}>
+      <View style={_styles.cell}>
+        {cellImageView || renderImageView()}
+        {cellContentView || renderCellContentView()}
+        {cellAccessoryView || renderAccessoryView()}
+      </View>
+    </SafeAreaView>
+  );
+
   if (isPressable && !isDisabled) {
     return (
       <TouchableHighlight
@@ -305,11 +328,15 @@ const Cell = props => {
         onPressIn={onHighlightRow}
         onPressOut={onUnHighlightRow}
       >
-        {renderCell()}
+        {withSafeAreaView ? renderCellWithSafeAreaView() : renderCell()}
       </TouchableHighlight>
     );
   }
-  return <View>{renderCell()}</View>;
+  return (
+    <View>
+      {withSafeAreaView ? renderCellWithSafeAreaView() : renderCell()}
+    </View>
+  );
 };
 
 const styles = StyleSheet.create({
@@ -319,6 +346,10 @@ const styles = StyleSheet.create({
     paddingRight: 20,
     minHeight: 44,
     flexDirection: 'row',
+  },
+  // SafeAreaView only adds padding.
+  cellSafeAreaContainer: {
+    flex: 1,
   },
   cellContentView: {
     alignItems: 'center',
@@ -459,6 +490,7 @@ Cell.propTypes = {
   titleTextStyle: Text.propTypes.style,
   titleTextStyleDisabled: Text.propTypes.style,
   onPress: PropTypes.oneOfType([PropTypes.bool, PropTypes.func]),
+  withSafeAreaView: PropTypes.bool,
 };
 
 Cell.defaultProps = {
@@ -491,6 +523,7 @@ Cell.defaultProps = {
   titleTextColor: '#000',
   titleTextStyle: {},
   titleTextStyleDisabled: {},
+  withSafeAreaView: true,
 };
 
 export default Cell;
