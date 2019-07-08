@@ -2,23 +2,32 @@
   "name": "react-native-tableview-simple",
   "description": "React Native component for TableView made with pure CSS",
   "homepage": "https://github.com/Purii/react-native-tableview-simple",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "author": "Patrick Puritscher <hello@patrickpuritscher.com>",
   "scripts": {
     "clean": "watchman watch-del-all && rm -rf node_modules/ && yarn cache clean && yarn",
-    "format:src": "prettier --trailing-comma es5 --single-quote --write 'components/**/*.js'",
-    "format:example": "prettier --trailing-comma es5 --single-quote --write 'example/*.js'",
+    "format:src": "prettier --write 'components/**/*.js'",
+    "format:example": "prettier --write 'example/*.js'",
     "format": "npm run format:src && npm run format:example",
     "jest": "jest",
     "lint": "eslint index.js components/",
-    "precommit": "lint-staged",
     "test": "npm run lint && npm run jest"
   },
   "lint-staged": {
+    "*.md": [
+      "prettier --write",
+      "git add"
+    ],
     "*.js": [
-      "prettier --trailing-comma es5 --single-quote --write",
+      "eslint",
+      "prettier --write",
       "git add"
     ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
   },
   "jest": {
     "preset": "react-native",
@@ -54,18 +63,15 @@
     "url": "git@github.com:Purii/react-native-tableview-simple.git"
   },
   "devDependencies": {
+    "@react-native-community/eslint-config": "^0.0.5",
     "babel-jest": "24.8.0",
     "babel-preset-react-native": "4.0.1",
-    "eslint": "^5.16.0",
-    "eslint-config-prettier": "^4.3.0",
-    "eslint-plugin-prettier": "^3.1.0",
-    "eslint-plugin-react": "^7.13.0",
-    "husky": "^2.3.0",
+    "eslint": "^6.0.1",
+    "husky": "^3.0.0",
     "jest": "24.8.0",
-    "lint-staged": "^8.1.7",
-    "prettier": "^1.17.1",
-    "react": "16.8.0",
-    "react-native": "^0.57.8",
+    "lint-staged": "^9.0.2",
+    "react": "16.8.6",
+    "react-native": "^0.60.0",
     "react-test-renderer": "16.8.6"
   },
   "dependencies": {

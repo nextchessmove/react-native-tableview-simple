@@ -1,9 +1,7 @@
-/* eslint-disable import/no-unresolved */
 import React from 'react';
-
 import PropTypes from 'prop-types';
-
 import {
+  Platform,
   SafeAreaView,
   StyleSheet,
   Text,
@@ -38,6 +36,7 @@ const Cell = props => {
     rightDetailColor,
     subtitleColor,
     subtitleTextStyle,
+    testID,
     title,
     titleTextStyle,
     titleTextStyleDisabled,
@@ -50,7 +49,6 @@ const Cell = props => {
   /**
    * Merge styles with props
    */
-  // eslint-disable-next-line no-underscore-dangle
   const _styles = {
     ...styles,
     cell: [
@@ -159,7 +157,9 @@ const Cell = props => {
    * @return {Image} Image component with updated props
    */
   const renderImageView = () => {
-    if (!image) return null;
+    if (!image) {
+      return null;
+    }
     const propsToAdd = {
       style: disableImageResize
         ? image.props.style
@@ -181,8 +181,7 @@ const Cell = props => {
       <Text
         allowFontScaling={allowFontScaling}
         numberOfLines={1}
-        style={_styles.cell_title}
-      >
+        style={_styles.cell_title}>
         {title}
       </Text>
     </View>
@@ -197,8 +196,7 @@ const Cell = props => {
       <Text
         allowFontScaling={allowFontScaling}
         numberOfLines={1}
-        style={_styles.cell_title}
-      >
+        style={_styles.cell_title}>
         {title}
       </Text>
       <Text
@@ -208,8 +206,7 @@ const Cell = props => {
           isDisabled
             ? [_styles.cell_rightDetail, _styles.cell_text__disabled]
             : _styles.cell_rightDetail
-        }
-      >
+        }>
         {detail}
       </Text>
     </View>
@@ -228,15 +225,13 @@ const Cell = props => {
           isDisabled
             ? [_styles.cell_leftDetail, _styles.cell_text__disabled]
             : _styles.cell_leftDetail
-        }
-      >
+        }>
         {detail}
       </Text>
       <Text
         allowFontScaling={allowFontScaling}
         numberOfLines={1}
-        style={_styles.cell_leftDetailTitle}
-      >
+        style={_styles.cell_leftDetailTitle}>
         {title}
       </Text>
     </View>
@@ -248,14 +243,12 @@ const Cell = props => {
    */
   const renderCellSubtitle = () => (
     <View
-      style={[_styles.cellContentView, _styles.cellContentView__type_subtitle]}
-    >
+      style={[_styles.cellContentView, _styles.cellContentView__type_subtitle]}>
       <View style={_styles.cellinner__subtitle}>
         <Text
           allowFontScaling={allowFontScaling}
           numberOfLines={1}
-          style={_styles.cell_title}
-        >
+          style={_styles.cell_title}>
           {title}
         </Text>
         <Text
@@ -265,8 +258,7 @@ const Cell = props => {
             isDisabled
               ? [_styles.cell_subtitle, _styles.cell_text__disabled]
               : _styles.cell_subtitle
-          }
-        >
+          }>
           {detail}
         </Text>
       </View>
@@ -327,13 +319,13 @@ const Cell = props => {
         underlayColor={highlightUnderlayColor}
         onPressIn={onHighlightRow}
         onPressOut={onUnHighlightRow}
-      >
+        testID={testID}>
         {withSafeAreaView ? renderCellWithSafeAreaView() : renderCell()}
       </TouchableHighlight>
     );
   }
   return (
-    <View>
+    <View testID={testID}>
       {withSafeAreaView ? renderCellWithSafeAreaView() : renderCell()}
     </View>
   );
@@ -347,7 +339,7 @@ const styles = StyleSheet.create({
     minHeight: 44,
     flexDirection: 'row',
   },
-  // SafeAreaView only adds padding.
+  // SafeAreaView only adds padding
   cellSafeAreaContainer: {
     flex: 1,
   },
@@ -481,6 +473,7 @@ Cell.propTypes = {
   rightDetailColor: PropTypes.string,
   subtitleColor: PropTypes.string,
   subtitleTextStyle: Text.propTypes.style,
+  testID: PropTypes.string,
   title: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.number,
@@ -519,11 +512,17 @@ Cell.defaultProps = {
   rightDetailColor: '#8E8E93',
   subtitleColor: '#000',
   subtitleTextStyle: {},
+  testID: undefined,
   title: '',
   titleTextColor: '#000',
   titleTextStyle: {},
   titleTextStyleDisabled: {},
-  withSafeAreaView: true,
+  withSafeAreaView:
+    Platform.OS === 'ios'
+      ? parseInt(Platform.Version, 10) <= 10
+        ? false
+        : true
+      : true,
 };
 
 export default Cell;
