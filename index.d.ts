@@ -389,6 +389,8 @@ export interface CellProps {
    * @memberof CellProps
    */
   withSafeAreaView?: boolean;
+
+  hideSeparator?: boolean;
 }
 
 export interface SeparatorProps {
