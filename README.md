@@ -1,21 +1,26 @@
 # react-native-tableview-simple
 
+[![Donate](https://img.shields.io/badge/Donate-Patreon-green.svg)](https://www.patreon.com/purii)
 [![Build Status](https://travis-ci.org/Purii/react-native-tableview-simple.svg?branch=master)](https://travis-ci.org/Purii/react-native-tableview-simple)
 [![npm version](http://img.shields.io/npm/v/react-native-tableview-simple.svg?style=flat)](https://www.npmjs.com/package/react-native-tableview-simple)
 [![npm](https://img.shields.io/npm/dm/react-native-tableview-simple.svg)](https://www.npmjs.com/package/react-native-tableview-simple)
 [![Package Quality](http://npm.packagequality.com/shield/react-native-tableview-simple.svg)](http://packagequality.com/#?package=react-native-tableview-simple)
-[![Greenkeeper badge](https://badges.greenkeeper.io/Purii/react-native-tableview-simple.svg)](https://greenkeeper.io/)
+[![Known Vulnerabilities](https://snyk.io/test/npm/react-native-tableview-simple/badge.svg)](https://snyk.io/test/npm/react-native-tableview-simple)
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/Purii/react-native-tableview-simple/master/LICENSE)
-[![Donate](https://img.shields.io/badge/Donate-Patreon-green.svg)](https://www.patreon.com/purii)
 
-If you like my component and want to buy me a coffee, checkout my [Patreon page](https://www.patreon.com/purii) – Thanks!
+<!-- prettier-ignore -->
+:point_right: _This component is used in my production app [**Game ideas**](https://apps.apple.com/us/app/game-ideas-get-inspired/id1450078546). Make sure to check it out!_ :point_left:
 
-This cross-platform component is inspired by the iOS-TableView. Made with pure CSS, the intention is to provide **a flexible and lightweight alternative to a bridged component**.
+This cross-platform component is inspired by the iOS-TableView. Made with pure CSS, the intention is to provide **a flexible and lightweight alternative to a bridged component**. Don't be scared of React-Native upgrades anymore!
 
 A possible use case might be an about- or a settings-screen with a few rows.
 For displaying long datalists it is recommended to use the `FlatList` Component together with `Cell` and `Separator` Components. ([see example](#render-with-flatlist))
 
-![](https://raw.github.com/Purii/react-native-tableview-simple/master/screenshotStandard.png)
+:rocket: If you like my component and want to buy me a coffee press the `Sponsor` Button and find out about GitHub Sponsors – Thanks! :point_left:
+
+|                                                                                               |                                                                                           |
+| :-------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------: |
+| ![](https://raw.github.com/Purii/react-native-tableview-simple/master/screenshotStandard.png) | ![](https://raw.github.com/Purii/react-native-tableview-simple/master/screenshotDark.png) |
 
 Have a look at the [examples below](https://github.com/Purii/react-native-tableview-simple#examples)! :-)
 
@@ -45,15 +50,37 @@ import { Cell, Section, TableView } from 'react-native-tableview-simple';
 ## Extensible
 
 `react-native-tableview-simple` provides you with some predefined CSS-styles, inspired by the native TableView.
-You can always mix the `Cell`-instances inside a `Section`, with other (React-Native)-Views.  
-Therefore the `Cell`-Component itself can't be manipulated heavily.
+You can always mix the `Cell`-instances inside a `Section`, with other (React-Native)-Views.
 
-_If you aren't satisfied with a component, feel free to create a PR or just create and use a custom component._
+### Override defaults of `Cell`-Component
 
-### Submit a Custom `Cell`-Component
+Don't repeat yourself.
+If you override the default props over and over again, just pass them as an object.
 
-Maybe you want to add your lovely designed `Cell`-Component to the project.
-Just move your component to the folder `components` and choose a meaningful name! :-)
+```jsx
+const cellPropsCustom = {
+  cellStyle: 'Basic',
+  title: 'Basic Custom',
+  backgroundColor: 'black',
+};
+
+
+<Cell onPress={console.log} {...cellPropsCustom} />
+<Cell onPress={console.log} {...cellPropsCustom} />
+```
+
+### Separator BackgroundColor is derived from Cell BackgroundColor
+
+The `Separator`-Component is a line from the left end to the right end.
+According to the original iOS TableView there should be an insent on the left end.
+This is done by separating the `Separator`-Component in two parts: `SeparatorContainer` (full width) and `SeparatorInner` (width - inset). (See: [`Separator.tsx`](/src/components/Separator.tsx))
+The `SeparatorContainer` has the same color that the `Cell`-Component above.
+The `SeparatorInner` has the default Separator Color.
+Pressing a Cell Component will change the color of `SeparatorInner` to `transparent`.
+
+#### Why is that so complicated?
+
+Because just hiding the separator would make the height of the component jump.
 
 ## Props
 
@@ -64,30 +91,41 @@ Just move your component to the folder `components` and choose a meaningful name
 
 ### `TableView`
 
-Currently `TableView` doesn't support any properties.
+The `TableView` component controls the theme.
+
+| Prop              | Default |        Type        | Description                                                                                                                               |
+| :---------------- | :-----: | :----------------: | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| children          |    -    | `React.ReactNode`  | Children. Should be of type `Section`                                                                                                     |
+| appearance        | `auto`  |      `string`      | `auto`: System Appearance; `light`: Light Appearance; `dark`: Dark Appearance; `[string]`: Appearance defined through `customAppearances` |
+| customAppearances |    -    | `THEME_APPEARANCE` |                                                                                                                                           |
+| style             |    -    |    `ViewStyle`     | Applied to the table wrapper                                                                                                              |
 
 ### `Section`
 
 The `Section` component is needed to render the `Cells` together with `Separators`.
 It's possible to use the `Flatlist` component instead ([Example](#render-with-flatlist)).
 
-| Prop                 |            Default            |       Type        | Description                                                |
-| :------------------- | :---------------------------: | :---------------: | ---------------------------------------------------------- |
-| allowFontScaling     |            `true`             |      `bool`       | Respect Text Size accessibility setting on iOS             |
-| footerComponent      |               -               | `React.Component` | Inject any component to replace original footer (optional) |
-| headerComponent      |               -               | `React.Component` | Inject any component to replace original header (optional) |
-| footer               |               -               |     `string`      | Footer value                                               |
-| footerTextColor      |           `#6d6d72`           |     `string`      | Text color of footer                                       |
-| header               |               -               |     `string`      | Header value                                               |
-| headerTextColor      |           `#6d6d72`           |     `string`      | Text color of header                                       |
-| hideSeparator        |            `false`            |      `bool`       | Hide separators                                            |
-| sectionPaddingBottom |             `15`              |     `number`      | Padding bottom of section                                  |
-| sectionPaddingTop    |             `15`              |     `number`      | Padding top of section                                     |
-| sectionTintColor     |           `#EFEFF4`           |     `string`      | Background color of section                                |
-| separatorInsetLeft   |             `15`              |     `number`      | Left inset of separator                                    |
-| separatorInsetRight  |              `0`              |     `number`      | Right inset of separator                                   |
-| separatorTintColor   |           `#C8C7CC`           |     `string`      | Color of separator                                         |
-| withSafeAreaView     | `true / false (on iOS <= 10)` |      `bool`       | Render section header and footer with SafeAreaView         |
+| Prop                      |            Default            |          Type          | Description                                                         |
+| :------------------------ | :---------------------------: | :--------------------: | ------------------------------------------------------------------- |
+| allowFontScaling          |            `true`             |         `bool`         | Respect Text Size accessibility setting on iOS                      |
+| footerComponent           |               -               |   `React.Component`    | Inject any component to replace original footer (optional)          |
+| headerComponent           |               -               |   `React.Component`    | Inject any component to replace original header (optional)          |
+| footer                    |               -               |        `string`        | Footer value                                                        |
+| footerTextColor           |           `#6d6d72`           |        `string`        | Text color of footer                                                |
+| footerTextStyle           |             `{}`              | `Text.propTypes.style` | These styles will be applied to the footer `Text`-Component.        |
+| header                    |               -               |        `string`        | Header value                                                        |
+| headerTextColor           |           `#6d6d72`           |        `string`        | Text color of header                                                |
+| headerTextStyle           |             `{}`              | `Text.propTypes.style` | These styles will be applied to the header `Text`-Component.        |
+| hideSeparator             |            `false`            |         `bool`         | Hide separators                                                     |
+| hideSurroundingSeparators |            `false`            |         `bool`         | Hide surrounding separators, best combined with roundedCorners      |
+| roundedCorners            |            `false`            |         `bool`         | Enable rounded corners, best combined with hideSurroundingSeparator |
+| sectionPaddingBottom      |             `15`              |        `number`        | Padding bottom of section                                           |
+| sectionPaddingTop         |             `15`              |        `number`        | Padding top of section                                              |
+| sectionTintColor          |           `#EFEFF4`           |        `string`        | Background color of section                                         |
+| separatorInsetLeft        |             `15`              |        `number`        | Left inset of separator                                             |
+| separatorInsetRight       |              `0`              |        `number`        | Right inset of separator                                            |
+| separatorTintColor        |           `#C8C7CC`           |        `string`        | Color of separator                                                  |
+| withSafeAreaView          | `true / false (on iOS <= 10)` |         `bool`         | Render section header and footer with SafeAreaView                  |
 
 ### `Cell`
 
@@ -110,6 +148,7 @@ To get an idea what you can modify via `props`, have a look at the [examples bel
 | cellImageView                     |               -               |             `React.Component`             | Replace image view component                                                                                                                                                        |
 | contentContainerStyle             |             `{}`              |          `View.propTypes.style`           | These styles will be applied to the content container which wraps all of the child views. Overrides `cellStyle` (_e.g.: Override paddingLeft and paddingRight or set fixed height_) |
 | detail                            |               -               |           `string` or `number`            | Detail value                                                                                                                                                                        |
+| detailTextProps                   |             `{}`              |             `Text.propTypes`              | These props will be applied to the (left- / right-) detail `Text`-Component.                                                                                                        |
 | detailTextStyle                   |             `{}`              |          `Text.propTypes.style`           | These styles will be applied to the (left- / right-) detail `Text`-Component.                                                                                                       |
 | disableImageResize                |            `false`            |                  `bool`                   | Disable resizing of image                                                                                                                                                           |
 | hideSeparator                     |            `false`            |                  `bool`                   | Hide the following `Separator`-Component                                                                                                                                            |
@@ -121,12 +160,14 @@ To get an idea what you can modify via `props`, have a look at the [examples bel
 | rightDetailColor                  |           `#8E8E93`           |                 `string`                  | Text color of right detail                                                                                                                                                          |
 | subtitleColor                     |            `#000`             |                 `string`                  | Text color of subtitle                                                                                                                                                              |
 | subtitleTextStyle                 |             `{}`              |          `Text.propTypes.style`           | These styles will be applied to the subtitle `Text`-Component.                                                                                                                      |
-| testID                            |          `undefined`          |                  `bool`                   | Add testID to root component                                                                                                                                                        |
+| testID                            |          `undefined`          |                 `string`                  | Add testID to root component                                                                                                                                                        |
 | title                             |               -               | `string` or `number` or `React.Component` | Title value                                                                                                                                                                         |
 | titleTextColor                    |            `#000`             |                 `string`                  | Text color of title                                                                                                                                                                 |
+| titleTextProps                    |             `{}`              |             `Text.propTypes`              | These props will be applied to the title `Text`-Component.                                                                                                                          |
 | titleTextStyle                    |             `{}`              |          `Text.propTypes.style`           | These styles will be applied to the title `Text`-Component (_e.g.: update `fontSize` or `fontFamily`_)                                                                              |
 | titleTextStyleDisabled            |             `{}`              |          `Text.propTypes.style`           | These styles will be applied to the title `Text`-Component, when the cell is disabled                                                                                               |
 | onPress                           |               -               |             `func` or `false`             | If set, cell will be automaticaly initialized with TouchableHighlight                                                                                                               |
+| onPressDetailAccessory            |               -               |             `func` or `false`             | Listen to onPress event of detail accessory                                                                                                                                         |
 | withSafeAreaView                  | `true / false (on iOS <= 10)` |                  `bool`                   | Render cell with SafeAreaView                                                                                                                                                       |
 
 #### Wrap `Cell`
@@ -306,11 +347,11 @@ const styles = StyleSheet.create({
 
 ### `react-native-tableview-simple` vs. Native iOS
 
-The left screen is build using `react-native-tableview-simple`. The right one is native.
+The left and middle screens are build using `react-native-tableview-simple`. The right one is native.
 
-|                            `react-native-tableview-simple`                            |                                         Native iOS                                          |
-| :-----------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------: |
-| ![](https://raw.github.com/Purii/react-native-tableview-simple/master/screenshot.png) | ![](https://raw.github.com/Purii/react-native-tableview-simple/master/screenshotNative.png) |
+|                     `react-native-tableview-simple` (Dark Appearance)                     |                            `react-native-tableview-simple`                            | Native iOS                                                                                  |
+| :---------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------: | ------------------------------------------------------------------------------------------- |
+| ![](https://raw.github.com/Purii/react-native-tableview-simple/master/screenshotDark.png) | ![](https://raw.github.com/Purii/react-native-tableview-simple/master/screenshot.png) | ![](https://raw.github.com/Purii/react-native-tableview-simple/master/screenshotNative.png) |
 
 ```javascript
 /**
@@ -593,6 +634,8 @@ const styles = StyleSheet.create({
 
 ### Render with `FlatList`
 
+Be aware of the prop [`keyboardShouldPersistTaps`](https://facebook.github.io/react-native/docs/scrollview#keyboardshouldpersisttaps) if using `ScrollView` or similar components. (See #85)
+
 ```javascript
 import React from 'react';
 import { FlatList } from 'react-native';
@@ -606,23 +649,25 @@ const data = [
   { id: 4, title: '4' },
 ];
 
-export default (ExampleWithFlatList = () => (
-  <FlatList
-    data={data}
-    keyExtractor={(item, index) => item.id}
-    renderItem={({ item, separators }) => (
-      <Cell
-        title={item.title}
-        onPress={console.log}
-        onHighlightRow={separators.highlight}
-        onUnHighlightRow={separators.unhighlight}
-      />
-    )}
-    ItemSeparatorComponent={({ highlighted }) => (
-      <Separator isHidden={highlighted} />
-    )}
-  />
-));
+export default ExampleWithFlatList = () => (
+  <TableView style={{ flex: 1 }}>
+    <FlatList
+      data={data}
+      keyExtractor={(item, index) => item.id}
+      renderItem={({ item, separators }) => (
+        <Cell
+          title={item.title}
+          onPress={console.log}
+          onHighlightRow={separators.highlight}
+          onUnHighlightRow={separators.unhighlight}
+        />
+      )}
+      ItemSeparatorComponent={({ highlighted }) => (
+        <Separator isHidden={highlighted} />
+      )}
+    />
+  </TableView>
+);
 ```
 
 # Try it out

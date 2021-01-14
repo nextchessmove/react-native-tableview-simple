@@ -1,11 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow
- */
-
 import React from 'react';
 import {
   ActivityIndicator,
@@ -18,7 +10,7 @@ import {
   TextInput,
   View,
 } from 'react-native';
-import { Cell, Section, TableView } from 'react-native-tableview-simple';
+import {Cell, Section, TableView} from 'react-native-tableview-simple';
 
 // Example component for section:headerComponent
 const CustomSectionHeader = () => (
@@ -31,7 +23,7 @@ const App = () => {
   return (
     <ScrollView contentContainerStyle={styles.stage}>
       <TableView>
-        <Section header="STANDARD" footer="A Footer">
+        <Section header="STANDARD" footer="A FOOTER">
           <Cell cellStyle="Basic" title="Basic" />
           <Cell cellStyle="RightDetail" title="RightDetail" detail="Detail" />
           <Cell cellStyle="LeftDetail" title="LeftDetail" detail="Detail" />
@@ -86,6 +78,7 @@ const App = () => {
             accessory="DetailDisclosure"
             title="RightDetail"
             detail="Detail"
+            onPressDetailAccessory={() => console.log('Some details')}
           />
           <Cell
             cellStyle="LeftDetail"
@@ -104,15 +97,16 @@ const App = () => {
             accessory="Detail"
             title="Pressable w/ accessory"
             onPress={() => console.log('Heyho!')}
+            onPressDetailAccessory={() => console.log('Some details')}
           />
         </Section>
-        <Section header="Image" footer="A Footer">
+        <Section header="IMAGE" footer="A FOOTER">
           <Cell
             cellStyle="Basic"
             title="Basic"
             image={
               <Image
-                style={{ borderRadius: 5 }}
+                style={{borderRadius: 5}}
                 source={{
                   uri: 'https://reactjs.org/favicon.ico',
                 }}
@@ -125,7 +119,7 @@ const App = () => {
             detail="Detail"
             image={
               <Image
-                style={{ borderRadius: 5 }}
+                style={{borderRadius: 5}}
                 source={{
                   uri: 'https://reactjs.org/favicon.ico',
                 }}
@@ -138,7 +132,7 @@ const App = () => {
             detail="Detail"
             image={
               <Image
-                style={{ borderRadius: 5 }}
+                style={{borderRadius: 5}}
                 source={{
                   uri: 'https://reactjs.org/favicon.ico',
                 }}
@@ -151,7 +145,7 @@ const App = () => {
             detail="No linebreakkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk"
             image={
               <Image
-                style={{ borderRadius: 5 }}
+                style={{borderRadius: 5}}
                 source={{
                   uri: 'https://reactjs.org/favicon.ico',
                 }}
@@ -165,7 +159,7 @@ const App = () => {
             onPress={() => console.log('Heyho!')}
             image={
               <Image
-                style={{ borderRadius: 5 }}
+                style={{borderRadius: 5}}
                 source={{
                   uri: 'https://reactjs.org/favicon.ico',
                 }}
@@ -178,7 +172,7 @@ const App = () => {
             disableImageResize
             image={
               <Image
-                style={{ height: 50, width: 50, borderRadius: 5 }}
+                style={{height: 50, width: 50, borderRadius: 5}}
                 source={{
                   uri: 'https://reactjs.org/favicon.ico',
                 }}
@@ -186,7 +180,18 @@ const App = () => {
             }
           />
         </Section>
-        <Section header="MISC">
+        <Section
+          header="Misc with rounded corners"
+          headerTextStyle={{
+            textTransform: 'uppercase',
+          }}
+          footer="And a custom styled footer text"
+          footerTextStyle={{
+            textTransform: 'uppercase',
+            color: '#37474F',
+          }}
+          hideSurroundingSeparators
+          roundedCorners>
           <Cell
             cellStyle="RightDetail"
             title="RightDetail"
@@ -211,7 +216,7 @@ const App = () => {
             cellStyle="Basic"
             title="Switch"
             cellAccessoryView={<Switch />}
-            contentContainerStyle={{ paddingVertical: 4 }}
+            contentContainerStyle={{paddingVertical: 4}}
           />
           <Cell
             cellStyle="Basic"
@@ -221,7 +226,7 @@ const App = () => {
           <Cell
             cellContentView={
               <TextInput
-                style={{ fontSize: 16, flex: 1 }}
+                style={{fontSize: 16, flex: 1}}
                 placeholder="TextInput"
               />
             }
@@ -230,9 +235,9 @@ const App = () => {
         <Section header="CUSTOMCELLS">
           <Cell
             onPress={() => console.log('Heyho!')}
-            contentContainerStyle={{ alignItems: 'flex-start', height: 60 }}
+            contentContainerStyle={{alignItems: 'flex-start', height: 60}}
             cellContentView={
-              <Text style={{ flex: 1, fontSize: 16 }}>
+              <Text style={{flex: 1, fontSize: 16}}>
                 Custom height with Cell-Component
               </Text>
             }
@@ -283,7 +288,7 @@ const App = () => {
 
 const styles = StyleSheet.create({
   stage: {
-    backgroundColor: '#EFEFF4',
+    backgroundColor: '#EFEFF4', // Change to #000 to preview Dark Mode/Appereance
     paddingTop: 20,
     paddingBottom: 20,
   },
