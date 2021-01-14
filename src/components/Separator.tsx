@@ -68,7 +68,7 @@ const Separator: React.FC<SeparatorInterface> = ({
 const styles = StyleSheet.create({
   separator: {},
   separatorInner: {
-    height: StyleSheet.hairlineWidth,
+    height: 1,
   },
 });
 
