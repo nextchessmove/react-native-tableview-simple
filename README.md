@@ -14,7 +14,7 @@
 This cross-platform component is inspired by the iOS-TableView. Made with pure CSS, the intention is to provide **a flexible and lightweight alternative to a bridged component**. Don't be scared of React-Native upgrades anymore!
 
 A possible use case might be an about- or a settings-screen with a few rows.
-For displaying long datalists it is recommended to use the `FlatList` Component together with `Cell` and `Separator` Components. ([see example](#render-with-flatlist))
+For displaying long datalists it is recommended to use the `FlatList` Component together with `Cell` and `Separator` Components. ([see example](#render-with-flatlist) or [live demo with expo](https://snack.expo.io/@purii/react-native-tableview-simple))
 
 :rocket: If you like my component and want to buy me a coffee press the `Sponsor` Button and find out about GitHub Sponsors – Thanks! :point_left:
 
@@ -146,6 +146,7 @@ To get an idea what you can modify via `props`, have a look at the [examples bel
 | cellAccessoryView                 |               -               |             `React.Component`             | Replace accessory view component (_e.g.: add Switch or ActivityIndicator_)                                                                                                          |
 | cellContentView                   |               -               |             `React.Component`             | Replace content view component                                                                                                                                                      |
 | cellImageView                     |               -               |             `React.Component`             | Replace image view component                                                                                                                                                        |
+children                            |               -               |             `React.Component`             | Additional content to be displayed below the cell. (_e.g: Add Picker or DateTimePicker_)
 | contentContainerStyle             |             `{}`              |          `View.propTypes.style`           | These styles will be applied to the content container which wraps all of the child views. Overrides `cellStyle` (_e.g.: Override paddingLeft and paddingRight or set fixed height_) |
 | detail                            |               -               |           `string` or `number`            | Detail value                                                                                                                                                                        |
 | detailTextProps                   |             `{}`              |             `Text.propTypes`              | These props will be applied to the (left- / right-) detail `Text`-Component.                                                                                                        |
@@ -234,7 +235,7 @@ See the [example below](#render-with-flatlist).
 
 ## Examples
 
-The following examples can be found in the folder `example`.  
+The following examples can be found in the folder `example`.
 To run the example project, follow these steps:
 
 1.  `git clone https://github.com/Purii/react-native-tableview-simple`
